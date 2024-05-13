@@ -1,7 +1,6 @@
 ﻿using Application.Services;
 using Domain.Entities;
 using Domain.Enums;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -15,14 +14,12 @@ namespace Api.Controllers
             _cabecaService = cabecaService;
         }
 
-        // GET: api/Cabeca
         [HttpGet("api/Cabeca")]
         public ActionResult<Cabeca> GetCabeca()
         {
             return Ok(_cabecaService.GetCabeca());
         }
 
-        // PUT: api/Cabeca/Rotacao
         [HttpPut("api/Cabeca/Rotacao")]
         public IActionResult PutRotacao([FromBody] EnumEstadoRotacaoCabeca estado)
         {
@@ -36,7 +33,6 @@ namespace Api.Controllers
             }
         }
 
-        // PUT: api/Cabeca/Inclinacao
         [HttpPut("api/Cabeca/Inclinacao")]
         public IActionResult PutInclinacao([FromBody] EnumEstadoInclinacaoCabeca estado)
         {

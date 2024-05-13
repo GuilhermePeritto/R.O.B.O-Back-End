@@ -1,7 +1,6 @@
 ﻿using Application.Services;
 using Domain.Entities;
 using Domain.Enums;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -15,7 +14,6 @@ namespace Api.Controllers
             _bracoService = bracoService;
         }
 
-        // GET: api/Braco/Esquerdo
         [HttpGet("api/Braco/{lado}")]
         public ActionResult<Braco> GetBraco(EnumLadoBraco lado)
         {
@@ -30,7 +28,6 @@ namespace Api.Controllers
             }
         }
 
-        // PUT: api/Braco/Esquerdo/Cotovelo
         [HttpPut("api/Braco/{lado}/Cotovelo")]
         public IActionResult PutCotovelo(EnumLadoBraco lado, [FromBody] EnumEstadoCotovelo estado)
         {
@@ -44,7 +41,6 @@ namespace Api.Controllers
             }
         }
 
-        // PUT: api/Braco/Esquerdo/Pulso
         [HttpPut("api/Braco/{lado}/Pulso")]
         public IActionResult PutPulso(EnumLadoBraco lado, [FromBody] EnumEstadoPulso estado)
         {
