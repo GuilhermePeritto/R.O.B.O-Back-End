@@ -6,10 +6,10 @@ namespace Application.Services
     public class BracoService : IBracoService
     {
         private readonly Dictionary<EnumLadoBraco, Braco> _bracos = new Dictionary<EnumLadoBraco, Braco>
-        {
-            { EnumLadoBraco.Esquerdo, new Braco() },
-            { EnumLadoBraco.Direito, new Braco() }
-        };
+    {
+        { EnumLadoBraco.Esquerdo, new Braco() },
+        { EnumLadoBraco.Direito, new Braco() }
+    };
 
         public Braco GetBraco(EnumLadoBraco lado)
         {
@@ -27,8 +27,20 @@ namespace Application.Services
         {
             if (_bracos.ContainsKey(lado))
             {
-                _bracos[lado].EstadoCotovelo = estado;
-                return true;
+                var braço = _bracos[lado];
+                if (estado >= braço.EstadoCotovelo - 1 && estado <= braço.EstadoCotovelo + 1)
+                {
+                    if (estado == EnumEstadoCotovelo.FortementeContraido && braço.EstadoPulso != EnumEstadoPulso.EmRepouso)
+                    {
+                        return false;
+                    }
+                    braço.EstadoCotovelo = estado;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -40,8 +52,23 @@ namespace Application.Services
         {
             if (_bracos.ContainsKey(lado))
             {
-                _bracos[lado].EstadoPulso = estado;
-                return true;
+                var braço = _bracos[lado];
+                if (estado >= braço.EstadoPulso - 1 && estado <= braço.EstadoPulso + 1)
+                {
+                    if (estado == EnumEstadoPulso.EmRepouso || braço.EstadoCotovelo == EnumEstadoCotovelo.FortementeContraido)
+                    {
+                        braço.EstadoPulso = estado;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
